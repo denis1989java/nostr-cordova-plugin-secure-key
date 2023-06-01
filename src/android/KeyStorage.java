@@ -1,4 +1,4 @@
-package android;
+package com.nostr.plugin;
 
 import android.content.Context;
 import android.util.Log;

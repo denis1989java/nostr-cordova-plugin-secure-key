@@ -2,25 +2,11 @@ package com.nostr.plugin;
 
 // Secure key store main class
 
-import android.content.Context;
-import android.os.Build;
-import android.security.KeyPairGeneratorSpec;
-import android.util.Log;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import javax.crypto.Cipher;
-import javax.crypto.CipherOutputStream;
-import javax.security.auth.x500.X500Principal;
-import java.io.ByteArrayOutputStream;
-import java.math.BigInteger;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.KeyStore;
-import java.security.PublicKey;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
