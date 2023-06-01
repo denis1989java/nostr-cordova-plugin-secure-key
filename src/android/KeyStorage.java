@@ -1,5 +1,7 @@
 package com.nostr.plugin;
 
+// Helper function for storing keys to internal storage.
+
 import android.content.Context;
 import android.util.Log;
 
@@ -7,9 +9,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-public class KeyStorage {
+public final class KeyStorage {
 
-  public static void writeValues(Context context, String keyAlias, byte[] vals)  {
+  public static void writeValues(Context context, String keyAlias, byte[] vals) {
     try {
       FileOutputStream fos = context.openFileOutput(Constants.SKS_FILENAME + keyAlias, context.MODE_PRIVATE);
       fos.write(vals);
@@ -32,12 +34,12 @@ public class KeyStorage {
       fis.close();
       return cipherText;
     } catch (Exception e) {
-      Log.e(Constants.TAG, "Exception: "  + e.getMessage());
+      Log.e(Constants.TAG, "Exception: " + e.getMessage());
       return new byte[0];
     }
   }
 
-  public static void resetValues(Context context, String keyAlias)  {
+  public static void resetValues(Context context, String keyAlias) {
     try {
       context.deleteFile(Constants.SKS_FILENAME + keyAlias);
     } catch (Exception e) {
@@ -45,4 +47,5 @@ public class KeyStorage {
     }
 
   }
+
 }
