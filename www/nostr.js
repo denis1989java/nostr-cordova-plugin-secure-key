@@ -10,6 +10,9 @@ var nostr = {
     getPublicKey: function(success, error, key) {
         exec(success, error, this.serviceName, "getPublicKey", [key]);
     },
+    close: function(data) {
+        exec(null, null, 'Modal', 'close', [ data ]);
+    }
 
 };
 
