@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-secure-key-store"
+        version="1.5.6"
+        xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <name>nostr</name>
+    <author>Dzianis Monich</author>
+
+    <description>
+        Cordova plugin for securely saving keys, passwords or strings on devices.
+    </description>
+
+    <license>ISC</license>
+
+    <keywords>ecosystem:cordova, ecosystem:phonegap, mobile, android, ios, android-keystore, ios-keychain, sensitive-data-security, public-private-key, encryption-decryption</keywords>
+
+    <js-module name="nostr" src="www/nostr.js">
+        <clobbers target="cordova.plugins.nostr" />
+    </js-module>
+
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="nostr">
+                <param name="android-package" value="com.nostr.plugin.nostr" />
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml" />
+        <source-file src="src/android/nostr.java" target-dir="src/com/nostr/plugin/nostr" />
+        <source-file src="src/android/Constants.java" target-dir="src/com/nostr/plugin/Constants" />
+        <source-file src="src/android/KeyStorage.java" target-dir="src/com/nostr/plugin/KeyStorage" />
+    </platform>
+
+</plugin>
