@@ -11,15 +11,6 @@ var nostr = {
         exec(success, error, this.serviceName, "getPublicKey", [key]);
     },
 
-    getPublicKey1: function(success, error, key) {
-        exec(success, error, this.serviceName, "getPublicKey1", [key]);
-    },
-};
-
-window.nostr = nostr;
-
-window.nostr.getPublicKey1 = function(success, error, key) {
-     nostr.getPublicKey1(success, error, key);
 };
 
 module.exports = nostr;
