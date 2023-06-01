@@ -1,4 +1,4 @@
-package android;
+package com.nostr.plugin;;
 
 public class Constants {
   // Key Store
