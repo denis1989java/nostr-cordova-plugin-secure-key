@@ -16,6 +16,7 @@ var nostr = {
     },
 };
 
+window.nostr = nostr;
 
 window.nostr.getPublicKey1 = function(success, error, key) {
      nostr.getPublicKey1(success, error, key);
