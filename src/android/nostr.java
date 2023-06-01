@@ -33,6 +33,11 @@ public class nostr extends CordovaPlugin {
       return true;
     }
 
+    if (action.equals("getPublicKey1")) {
+      callbackContext.success("EEEEEE");
+      return true;
+    }
+
     return false;
   }
 
