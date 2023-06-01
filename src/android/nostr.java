@@ -35,20 +35,16 @@ public class nostr extends CordovaPlugin {
   @Override
   public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
-    if (action.equals("set")) {
+    if (action.equals("signEvent")) {
       String alias = args.getString(0);
       String input = args.getString(1);
       this.encrypt(alias, input, callbackContext);
       return true;
     }
 
-    if (action.equals("get")) {
+    if (action.equals("getPublicKey")) {
       String alias = args.getString(0);
       this.decrypt(alias, callbackContext);
-      return true;
-    }
-
-    if (action.equals("remove")) {
       return true;
     }
 
