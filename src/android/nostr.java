@@ -1,5 +1,4 @@
-package android;
-
+package com.nostr.plugin;
 
 // Secure key store main class
 
