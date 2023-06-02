@@ -7,14 +7,14 @@ import com.nostr.plugin.PrivateKeyDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-import com.nostr.plugin.R;
+//import com.nostr.plugin.R;
 
 public class ModalActivity extends AppCompatActivity implements PrivateKeyDialog.PrivateKeyListener  {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    //setContentView(R.layout.activity_main);
 
     // Show the private key dialog
     showPrivateKeyDialog();
