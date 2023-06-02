@@ -14,7 +14,7 @@ public class ModalActivity extends AppCompatActivity implements PrivateKeyDialog
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout);
+    setContentView(null);
 
     // Show the private key dialog
     showPrivateKeyDialog();
