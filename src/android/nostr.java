@@ -1,4 +1,4 @@
-package com.nostr.plugin;
+package com.nostr.band;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
@@ -14,7 +14,7 @@ import android.util.Log;
 import android.util.Base64;
 import android.security.KeyPairGeneratorSpec;
 import android.os.Build;
-import com.nostr.plugin.ModalActivity;
+import com.nostr.band.ModalActivity;
 
 
 import java.security.*;

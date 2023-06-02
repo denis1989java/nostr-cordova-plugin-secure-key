@@ -22,21 +22,21 @@
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="nostr">
-                <param name="android-package" value="com.nostr.plugin.nostr" />
+                <param name="android-package" value="com.nostr.band.nostr" />
             </feature>
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml" />
-        <source-file src="src/android/nostr.java" target-dir="src/com/nostr/plugin/nostr" />
-        <source-file src="src/android/ModalActivity.java" target-dir="src/com/nostr/plugin/ModalActivity" />
-        <source-file src="src/android/Constants.java" target-dir="src/com/nostr/plugin/Constants" />
-        <source-file src="src/android/KeyStorage.java" target-dir="src/com/nostr/plugin/KeyStorage" />
-        <source-file src="src/android/PrivateKeyDialog.java" target-dir="src/com/nostr/plugin/PrivateKeyDialog" />
+        <source-file src="src/android/nostr.java" target-dir="src/com/nostr/band/nostr" />
+        <source-file src="src/android/ModalActivity.java" target-dir="src/com/nostr/band/ModalActivity" />
+        <source-file src="src/android/Constants.java" target-dir="src/com/nostr/band/Constants" />
+        <source-file src="src/android/KeyStorage.java" target-dir="src/com/nostr/band/KeyStorage" />
+        <source-file src="src/android/PrivateKeyDialog.java" target-dir="src/com/nostr/band/PrivateKeyDialog" />
 
         <!--  drawable src/android/resources -->
         <resource-file src="src/android/res/layout/dialog_private_key.xml" target="res/layout/dialog_private_key.xml" />
 
         <config-file target="AndroidManifest.xml" parent="application">
-            <activity android:name="com.nostr.plugin.ModalActivity"></activity>
+            <activity android:name="com.nostr.band.ModalActivity"></activity>
         </config-file>
     </platform>
 

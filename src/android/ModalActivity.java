@@ -1,20 +1,20 @@
-package com.nostr.plugin;
+package com.nostr.band;
 
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.nostr.plugin.PrivateKeyDialog;
+import com.nostr.band.PrivateKeyDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-import android.R;
+import com.nostr.band.R;
 
 public class ModalActivity extends AppCompatActivity implements PrivateKeyDialog.PrivateKeyListener  {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(null);
 
     // Show the private key dialog
     showPrivateKeyDialog();

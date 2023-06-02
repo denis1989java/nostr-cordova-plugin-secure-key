@@ -1,4 +1,4 @@
-package com.nostr.plugin;
+package com.nostr.band;
 
 // Helper function for storing keys to internal storage.
 
