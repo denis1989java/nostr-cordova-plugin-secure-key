@@ -1,4 +1,4 @@
-package com.nostr.plugin;;
+package com.nostr.plugin;
 
 public class Constants {
 

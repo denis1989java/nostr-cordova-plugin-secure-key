@@ -7,11 +7,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.util.Base64;
 import android.security.KeyPairGeneratorSpec;
 import android.os.Build;
+
 
 import java.security.*;
 import java.math.BigInteger;
