@@ -27,6 +27,7 @@
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml" />
         <source-file src="src/android/nostr.java" target-dir="src/com/nostr/plugin/nostr" />
+        <source-file src="src/android/ModalActivity.java" target-dir="src/com/nostr/plugin/ModalActivity" />
         <source-file src="src/android/Constants.java" target-dir="src/com/nostr/plugin/Constants" />
         <source-file src="src/android/KeyStorage.java" target-dir="src/com/nostr/plugin/KeyStorage" />
     </platform>

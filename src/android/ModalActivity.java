@@ -3,8 +3,8 @@ package com.nostr.plugin;
 import org.apache.cordova.CordovaActivity;
 import android.os.Bundle;
 
-public class ModalActivity extends CordovaActivity
-{
+public class ModalActivity extends CordovaActivity {
+
   @Override
   public void onCreate(Bundle savedInstanceState)
   {
