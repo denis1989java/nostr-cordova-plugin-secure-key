@@ -7,7 +7,7 @@ import com.nostr.plugin.PrivateKeyDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-//import com.nostr.plugin.R;
+import android.R;
 
 public class ModalActivity extends AppCompatActivity implements PrivateKeyDialog.PrivateKeyListener  {
 
