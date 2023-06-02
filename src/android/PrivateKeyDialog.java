@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
-//import com.nostr.plugin.R;
+import android.R;
 
 public class PrivateKeyDialog extends AppCompatDialogFragment {
   private EditText privateKeyEditText;
@@ -35,9 +35,9 @@ public class PrivateKeyDialog extends AppCompatDialogFragment {
     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
     LayoutInflater inflater = requireActivity().getLayoutInflater();
-    View view = inflater.inflate(null, null);
+    View view = inflater.inflate(R.layout.dialog_private_key, null);
 
-    privateKeyEditText = view.findViewById(1);
+    privateKeyEditText = view.findViewById(R.id.edit_private_key);
 
     builder.setView(view)
             .setTitle("Warning")
