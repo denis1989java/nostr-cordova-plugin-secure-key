@@ -32,10 +32,10 @@
         <source-file src="src/android/KeyStorage.java" target-dir="src/com/nostr/plugin/KeyStorage" />
 
         <!--  drawable src/android/resources -->
-        <resource-file src="src/android/res/anim/bottom_in1.xml" target="res/anim/bottom_in1.xml" />
+       <!-- <resource-file src="src/android/res/anim/bottom_in1.xml" target="res/anim/bottom_in1.xml" />
         <resource-file src="src/android/res/anim/bottom_out1.xml" target="res/anim/bottom_out1.xml" />
         <resource-file src="src/android/res/anim/hold1.xml" target="res/anim/hold1.xml" />
-
+-->
         <config-file target="AndroidManifest.xml" parent="application">
             <activity android:name="com.nostr.plugin.ModalActivity"></activity>
         </config-file>
