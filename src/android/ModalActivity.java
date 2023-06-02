@@ -2,6 +2,7 @@ package com.nostr.plugin;
 
 import org.apache.cordova.CordovaActivity;
 import android.os.Bundle;
+import com.nostr.plugin.R;
 
 public class ModalActivity extends CordovaActivity {
 
