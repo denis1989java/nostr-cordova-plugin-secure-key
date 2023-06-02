@@ -2,7 +2,7 @@ package com.nostr.plugin;
 
 import org.apache.cordova.CordovaActivity;
 import android.os.Bundle;
-import com.nostr.plugin.R;
+import android.R;
 
 public class ModalActivity extends CordovaActivity {
 
@@ -13,7 +13,7 @@ public class ModalActivity extends CordovaActivity {
     this.overridePendingTransition(R.anim.bottom_in, R.anim.hold);
     super.init();
 
-    String url = getIntent().getStringExtra(Modal.PARAM_LOAD_URL);
+    String url = getIntent().getStringExtra("loadUrl");
     super.loadUrl(url);
   }
 
