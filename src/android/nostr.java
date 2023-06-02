@@ -14,7 +14,7 @@ import android.util.Log;
 import android.util.Base64;
 import android.security.KeyPairGeneratorSpec;
 import android.os.Build;
-com.nostr.plugin.ModalActivity;
+import com.nostr.plugin.ModalActivity;
 
 
 import java.security.*;
