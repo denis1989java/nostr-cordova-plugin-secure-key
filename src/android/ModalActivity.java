@@ -1,25 +1,33 @@
 package com.nostr.plugin;
 
-import org.apache.cordova.CordovaActivity;
 import android.os.Bundle;
-//import com.nostr.plugin.R;
+import android.widget.Toast;
 
-public class ModalActivity extends CordovaActivity {
+import com.nostr.plugin.PrivateKeyDialog;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+
+public class ModalActivity extends AppCompatActivity implements PrivateKeyDialog.PrivateKeyListener  {
 
   @Override
-  public void onCreate(Bundle savedInstanceState)
-  {
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    //this.overridePendingTransition(R.anim.bottom_in, R.anim.hold);
-    super.init();
+    setContentView(R.layout.activity_main);
 
-    String url = getIntent().getStringExtra("loadUrl");
-    super.loadUrl(url);
+    // Show the private key dialog
+    showPrivateKeyDialog();
+  }
+
+  private void showPrivateKeyDialog() {
+    DialogFragment dialog = new PrivateKeyDialog();
+    dialog.show(getSupportFragmentManager(), "private_key_dialog");
   }
 
   @Override
-  public void finish() {
-    super.finish();
-  //  this.overridePendingTransition(R.anim.diagonaltranslate,R.alpha);
+  public void onPrivateKeyEntered(String privateKey) {
+    // Handle the private key entered by the user
+    Toast.makeText(this, "Private Key: " + privateKey, Toast.LENGTH_SHORT).show();
+    // Perform any additional logic here with the private key
   }
 }
