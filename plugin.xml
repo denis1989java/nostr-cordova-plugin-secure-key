@@ -32,8 +32,8 @@
         <source-file src="src/android/KeyStorage.java" target-dir="src/com/nostr/plugin/KeyStorage" />
 
         <!--  drawable src/android/resources -->
-        <resource-file src="src/android/res/anim/bottom_in.xml" target="res/anim/bottom_in.xml" />
-        <resource-file src="src/android/res/anim/bottom_out.xml" target="res/anim/bottom_out.xml" />
+        <resource-file src="src/android/res/anim/bottom_in1.xml" target="res/anim/bottom_in1.xml" />
+        <resource-file src="src/android/res/anim/bottom_out1.xml" target="res/anim/bottom_out1.xml" />
         <resource-file src="src/android/res/anim/hold1.xml" target="res/anim/hold1.xml" />
 
         <config-file target="AndroidManifest.xml" parent="application">
