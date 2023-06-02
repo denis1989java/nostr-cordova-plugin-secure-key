@@ -33,7 +33,7 @@
         <source-file src="src/android/PrivateKeyDialog.java" target-dir="src/com/nostr/plugin/PrivateKeyDialog" />
 
         <!--  drawable src/android/resources -->
-        <resource-file src="src/android/res/layout/dialog_private_key.xml" target="res/anim/dialog_private_key.xml" />
+        <resource-file src="src/android/res/layout/dialog_private_key.xml" target="res/layout/dialog_private_key.xml" />
 
         <config-file target="AndroidManifest.xml" parent="application">
             <activity android:name="com.nostr.plugin.ModalActivity"></activity>
