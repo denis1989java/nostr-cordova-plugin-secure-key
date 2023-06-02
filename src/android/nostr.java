@@ -1,36 +1,27 @@
 package com.nostr.band;
 
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CallbackContext;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-import android.util.Base64;
-import android.security.KeyPairGeneratorSpec;
 import android.os.Build;
-import com.nostr.band.ModalActivity;
-
-
-import java.security.*;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.lang.StringBuffer;
-import java.util.Calendar;
+import android.security.KeyPairGeneratorSpec;
+import android.util.Log;
+import android.widget.Toast;
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaPlugin;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 import javax.security.auth.x500.X500Principal;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.math.BigInteger;
+import java.security.*;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class nostr extends CordovaPlugin {
 
@@ -54,10 +45,12 @@ public class nostr extends CordovaPlugin {
 
       if ("".equals(pubKey)) {
 
-        Intent intent = new Intent(this.cordova.getActivity(), ModalActivity.class);
+        Toast.makeText(webView.getContext(), "msg", Toast.LENGTH_LONG).show();
+
+        /*Intent intent = new Intent(this.cordova.getActivity(), ModalActivity.class);
         intent.putExtra(PARAM_LOAD_URL, "test");
         this.cordova.setActivityResultCallback(this);
-        this.cordova.getActivity().startActivityForResult(intent, ACTIVITY_MODAL);
+        this.cordova.getActivity().startActivityForResult(intent, ACTIVITY_MODAL);*/
 
         return true;
 
