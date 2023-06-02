@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.nostr.plugin.R;
+
 public class PrivateKeyDialog extends AppCompatDialogFragment {
   private EditText privateKeyEditText;
   private PrivateKeyListener listener;
