@@ -37,7 +37,7 @@ public class PrivateKeyDialog extends AppCompatDialogFragment {
     LayoutInflater inflater = requireActivity().getLayoutInflater();
     View view = inflater.inflate(null, null);
 
-    privateKeyEditText = view.findViewById(null);
+    privateKeyEditText = view.findViewById(1);
 
     builder.setView(view)
             .setTitle("Warning")
