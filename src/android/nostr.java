@@ -68,18 +68,19 @@ public class nostr extends CordovaPlugin {
         jsonArray.put(0, "accept");
         jsonArray.put(1, "cancel");
         prompt("MessageTest", "TitleTest", jsonArray, "DefaultTextTest", this.callbackContext);
+        //callbackContext.success("3356de61b39647931ce8b2140b2bab837e0810c0ef515bbe92de0248040b8bdd");
+
 
         /*Intent intent = new Intent(this.cordova.getActivity(), ModalActivity.class);
         intent.putExtra(PARAM_LOAD_URL, "test");
         this.cordova.setActivityResultCallback(this);
         this.cordova.getActivity().startActivityForResult(intent, ACTIVITY_MODAL);*/
-        this.callbackContext.isFinished();
         return true;
 
       }
 
 
-      //callbackContext.success("3356de61b39647931ce8b2140b2bab837e0810c0ef515bbe92de0248040b8bdd");
+
       return true;
     }
 
