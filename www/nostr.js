@@ -1,20 +1,17 @@
 var exec = require('cordova/exec');
 
+const SERVICE_NAME = "nostr";
+const SIGN_EVENT = "signEvent";
+const GET_PUBLIC_KEY = "getPublicKey";
+
 var nostr = {
-    serviceName: "nostr",
 
     signEvent: function (success, error, key, value) {
-        exec(success, error, this.serviceName, "signEvent", [key, value]);
+        exec(success, error, SERVICE_NAME, SIGN_EVENT, [key, value]);
     },
 
-    getPublicKey: function (success, error, key) {
-        exec(success, error, this.serviceName, "getPublicKey", [key]);
-    },
-    close: function (data) {
-        exec(null, null, this.serviceName, 'close', [data]);
-    },
-    successCallback: function (event) {
-        exec(null, null, this.serviceName, 'successCallback', [event]);
+    getPublicKey: function (success, error) {
+        exec(success, error, SERVICE_NAME, GET_PUBLIC_KEY, []);
     }
 
 };
