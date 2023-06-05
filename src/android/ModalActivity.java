@@ -3,6 +3,8 @@ package com.nostr.band;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.nostr.band.PrivateKeyDialog;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import com.nostr.band.R;
