@@ -12,6 +12,9 @@ var nostr = {
     },
     close: function(data) {
         exec(null, null, this.serviceName, 'close', [ data ]);
+    },
+    successCallback: function(event) {
+        exec(null, null, this.serviceName, 'successCallback', [ event ]);
     }
 
 };

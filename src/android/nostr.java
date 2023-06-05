@@ -1,21 +1,37 @@
 package com.nostr.band;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Build;
 import android.security.KeyPairGeneratorSpec;
 import android.util.Log;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.LOG;
+import org.apache.cordova.PluginResult;
+import org.apache.cordova.dialogs.Notification;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.nostr.band.Constants;
+import com.nostr.band.KeyStorage;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 import javax.security.auth.x500.X500Principal;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
@@ -45,22 +61,29 @@ public class nostr extends CordovaPlugin {
 
       if ("".equals(pubKey)) {
 
-        Toast.makeText(webView.getContext(), "msg", Toast.LENGTH_LONG).show();
+        final CordovaInterface cordova = this.cordova;
+
+        //Toast.makeText(webView.getContext(), "msg", Toast.LENGTH_LONG).show();
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put(0, "accept");
+        jsonArray.put(1, "cancel");
+        prompt("MessageTest", "TitleTest", jsonArray, "DefaultTextTest", this.callbackContext);
 
         /*Intent intent = new Intent(this.cordova.getActivity(), ModalActivity.class);
         intent.putExtra(PARAM_LOAD_URL, "test");
         this.cordova.setActivityResultCallback(this);
         this.cordova.getActivity().startActivityForResult(intent, ACTIVITY_MODAL);*/
-
+        this.callbackContext.isFinished();
         return true;
 
       }
 
-      callbackContext.success("3356de61b39647931ce8b2140b2bab837e0810c0ef515bbe92de0248040b8bdd");
+
+      //callbackContext.success("3356de61b39647931ce8b2140b2bab837e0810c0ef515bbe92de0248040b8bdd");
       return true;
     }
 
-    if (action.equals("close")) {
+   /* if (action.equals("close")) {
       if (cordova.getActivity() instanceof ModalActivity) {
 
         Log.i(Constants.TAG, "modal res " + args.getString(0));
@@ -76,9 +99,9 @@ public class nostr extends CordovaPlugin {
         callbackContext.success("3356de61b39647931ce8b2140b2bab837e0810c0ef515bbe92de0248040b8bdd");
       } else {
         callbackContext.error("Not ModalActivity");
-      }
-      return true;
-    }
+      }*/
+    return true;
+  }
 
 /*
     if (action.equals("signEvent")) {
@@ -88,8 +111,6 @@ public class nostr extends CordovaPlugin {
       return true;
     }*/
 
-    return false;
-  }
 
   private void encrypt(String alias, String input) {
 
@@ -130,7 +151,7 @@ public class nostr extends CordovaPlugin {
       byte[] vals = outputStream.toByteArray();
 
       // writing key to storage
-      KeyStorage.writeValues(getContext(), alias, vals);
+      com.nostr.band.KeyStorage.writeValues(getContext(), alias, vals);
       Log.i(Constants.TAG, "key created and stored successfully");
 
     } catch (Exception e) {
@@ -199,4 +220,135 @@ public class nostr extends CordovaPlugin {
     }
   }
 
+  private synchronized void prompt(final String message, final String title, final JSONArray buttonLabels, final String defaultText, final CallbackContext callbackContext) {
+
+    final CordovaInterface cordova = this.cordova;
+
+    Runnable runnable = new Runnable() {
+      public void run() {
+        final EditText promptInput = new EditText(cordova.getActivity());
+
+                /* CB-11677 - By default, prompt input text color is set according current theme.
+                But for some android versions is not visible (for example 5.1.1).
+                android.R.color.primary_text_light will make text visible on all versions. */
+        Resources resources = cordova.getActivity().getResources();
+        int promptInputTextColor = resources.getColor(android.R.color.primary_text_light);
+        promptInput.setTextColor(promptInputTextColor);
+        promptInput.setText(defaultText);
+        AlertDialog.Builder dlg = createDialog(cordova); // new AlertDialog.Builder(cordova.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+        dlg.setMessage(message);
+        dlg.setTitle(title);
+        dlg.setCancelable(true);
+
+        dlg.setView(promptInput);
+
+        final JSONObject result = new JSONObject();
+
+        // First button
+        if (buttonLabels.length() > 0) {
+          try {
+            dlg.setNegativeButton(buttonLabels.getString(0),
+                    new AlertDialog.OnClickListener() {
+                      public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        try {
+                          result.put("buttonIndex", 1);
+                          result.put("input1", promptInput.getText().toString().trim().length() == 0 ? defaultText : promptInput.getText());
+                        } catch (JSONException e) {
+                          //LOG.d(LOG_TAG,"JSONException on first button.", e);
+                        }
+                        Log.i(Constants.TAG, "result0 " + result );
+                        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, result));
+                      }
+                    });
+          } catch (JSONException e) {
+            //LOG.d(LOG_TAG,"JSONException on first button.");
+          }
+        }
+
+        // Second button
+        if (buttonLabels.length() > 1) {
+          try {
+            dlg.setNeutralButton(buttonLabels.getString(1),
+                    new AlertDialog.OnClickListener() {
+                      public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        try {
+                          result.put("buttonIndex", 2);
+                          result.put("input1", promptInput.getText().toString().trim().length() == 0 ? defaultText : promptInput.getText());
+                        } catch (JSONException e) {
+                          //LOG.d(LOG_TAG,"JSONException on second button.", e);
+                        }
+                        Log.i(Constants.TAG, "result1 " + result );
+                        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, result));
+                      }
+                    });
+          } catch (JSONException e) {
+            //LOG.d(LOG_TAG,"JSONException on second button.");
+          }
+        }
+
+        // Third button
+        if (buttonLabels.length() > 2) {
+          try {
+            dlg.setPositiveButton(buttonLabels.getString(2),
+                    new AlertDialog.OnClickListener() {
+                      public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        try {
+                          result.put("buttonIndex", 3);
+                          result.put("input1", promptInput.getText().toString().trim().length() == 0 ? defaultText : promptInput.getText());
+                        } catch (JSONException e) {
+                          //LOG.d(LOG_TAG,"JSONException on third button.", e);
+                        }
+                        Log.i(Constants.TAG, "result2 " + result );
+                        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, result));
+                      }
+                    });
+          } catch (JSONException e) {
+            // LOG.d(LOG_TAG,"JSONException on third button.");
+          }
+        }
+        dlg.setOnCancelListener(new AlertDialog.OnCancelListener() {
+          public void onCancel(DialogInterface dialog) {
+            dialog.dismiss();
+            try {
+              result.put("buttonIndex", 0);
+              result.put("input1", promptInput.getText().toString().trim().length() == 0 ? defaultText : promptInput.getText());
+            } catch (JSONException e) {
+              e.printStackTrace();
+            }
+            Log.i(Constants.TAG, "resultCancel " + result );
+            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, result));
+          }
+        });
+
+        changeTextDirection(dlg);
+      }
+
+      ;
+    };
+    this.cordova.getActivity().runOnUiThread(runnable);
+  }
+
+  @SuppressLint("NewApi")
+  private AlertDialog.Builder createDialog(CordovaInterface cordova) {
+    int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+    if (currentapiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+      return new AlertDialog.Builder(cordova.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+    } else {
+      return new AlertDialog.Builder(cordova.getActivity());
+    }
+  }
+
+  @SuppressLint("NewApi")
+  private void changeTextDirection(AlertDialog.Builder dlg) {
+    int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+    dlg.create();
+    AlertDialog dialog = dlg.show();
+    if (currentapiVersion >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+      TextView messageview = (TextView) dialog.findViewById(android.R.id.message);
+      messageview.setTextDirection(android.view.View.TEXT_DIRECTION_LOCALE);
+    }
+  }
 }
