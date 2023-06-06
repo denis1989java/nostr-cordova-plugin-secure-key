@@ -46,7 +46,7 @@ import javax.security.auth.x500.X500Principal;
 
 public class nostr extends CordovaPlugin {
 
-  private static final String DEFAULT_VAL = "NOSTR_PK1";
+  private static final String DEFAULT_VAL = "NOSTR_PK";
 
   @Override
   public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -63,6 +63,9 @@ public class nostr extends CordovaPlugin {
 
         return true;
       }
+
+      callbackContext.success(initResponseJSONObject(pubKey));
+
       return true;
     }
     return false;
