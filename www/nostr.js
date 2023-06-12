@@ -6,8 +6,8 @@ const GET_PUBLIC_KEY = "getPublicKey";
 
 var nostr = {
 
-    signEvent: function (success, error, key, value) {
-        exec(success, error, SERVICE_NAME, SIGN_EVENT, [key, value]);
+    signEvent: function (success, error, msg) {
+        exec(success, error, SERVICE_NAME, SIGN_EVENT, [msg]);
     },
 
     getPublicKey: function (success, error) {
