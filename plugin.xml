@@ -29,6 +29,7 @@
         <source-file src="src/android/nostr.java" target-dir="src/com/nostr/band/nostr" />
         <source-file src="src/android/Constants.java" target-dir="src/com/nostr/band/Constants" />
         <source-file src="src/android/KeyStorage.java" target-dir="src/com/nostr/band/KeyStorage" />
+        <framework custom="true" src="src/android/gradle.gradle" type="gradleReference"/>
 
         <config-file target="AndroidManifest.xml" parent="application">
             <activity android:name="com.nostr.band.ModalActivity"></activity>
