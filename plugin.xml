@@ -30,6 +30,8 @@
         <source-file src="src/android/Constants.java" target-dir="src/com/nostr/band/Constants" />
         <source-file src="src/android/KeyStorage.java" target-dir="src/com/nostr/band/KeyStorage" />
         <source-file src="src/android/Utils.java" target-dir="src/com/nostr/band/Utils" />
+        <source-file src="src/android/Pair.java" target-dir="src/com/nostr/band/Pair" />
+        <source-file src="src/android/Bech32Util.java" target-dir="src/com/nostr/band/Bech32Util" />
         <framework custom="true" src="src/android/gradle.gradle" type="gradleReference"/>
 
         <config-file target="AndroidManifest.xml" parent="application">

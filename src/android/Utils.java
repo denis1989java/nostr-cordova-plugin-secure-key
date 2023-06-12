@@ -1,17 +1,12 @@
-package android;
+package com.nostr.band;
+
+import java.util.Random;
 
 public class Utils {
 
-  //private final static MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
-
-
-/*  public ByteArray privkeyCreate (){
-    ByteArray bytes = new ByteArray(32);
-    random.nextBytes(bytes);
-    return bytes
+  public byte[] privkeyCreate() {
+    byte[] bytes = new byte[20];
+    new Random().nextBytes(bytes);
+    return bytes;
   }
-
-  public pubkeyCreate(privKey: ByteArray) =
-          secp256k1.pubKeyCompress(secp256k1.pubkeyCreate(privKey)).copyOfRange(1, 33)*/
-
 }
