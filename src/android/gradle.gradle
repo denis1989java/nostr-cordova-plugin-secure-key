@@ -4,3 +4,12 @@ dependencies {
     implementation group: 'fr.acinq.secp256k1', name: 'secp256k1-kmp-jni-android', version: '0.10.0'
 
 }
+
+android {
+    compileSdkVersion 33
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
