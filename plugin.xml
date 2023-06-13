@@ -32,6 +32,7 @@
         <source-file src="src/android/KeyStorage.java" target-dir="src/com/nostr/band/KeyStorage" />
         <source-file src="src/android/Bech32Util.kt" target-dir="java/com/nostr/band/" />
         <source-file src="src/android/Utils.kt" target-dir="java/com/nostr/band/" />
+        <source-file src="src/android/Event.kt" target-dir="java/com/nostr/band/" />
         <framework custom="true" src="src/android/gradle.gradle" type="gradleReference"/>
 
         <config-file target="AndroidManifest.xml" parent="application">
