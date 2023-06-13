@@ -1,6 +1,7 @@
 package com.nostr.band;
 
 import com.google.gson.*
+import com.google.gson.annotations.SerializedName
 import fr.acinq.secp256k1.Secp256k1
 import org.spongycastle.util.encoders.Hex
 import java.lang.Exception
@@ -114,22 +115,6 @@ open class Event(
         fun fromJson(json: String, lenient: Boolean = false): Event = gson.fromJson(json, Event::class.java).getRefinedEvent(lenient)
 
         fun fromJson(json: JsonElement, lenient: Boolean = false): Event = gson.fromJson(json, Event::class.java).getRefinedEvent(lenient)
-
-        fun Event.getRefinedEvent(lenient: Boolean = false): Event = when (kind) {
-            MetadataEvent.kind -> MetadataEvent(id, pubKey, createdAt, tags, content, sig)
-            TextNoteEvent.kind -> TextNoteEvent(id, pubKey, createdAt, tags, content, sig)
-            RecommendRelayEvent.kind -> RecommendRelayEvent(id, pubKey, createdAt, tags, content, sig, lenient)
-            ContactListEvent.kind -> ContactListEvent(id, pubKey, createdAt, tags, content, sig)
-            PrivateDmEvent.kind -> PrivateDmEvent(id, pubKey, createdAt, tags, content, sig)
-            DeletionEvent.kind -> DeletionEvent(id, pubKey, createdAt, tags, content, sig)
-            6 -> this // content has full event. Resend/Retweet
-            7 -> this // no content but e and p tags. Boosts
-            17 -> this // nwiki. tag w->subject https://github.com/fiatjaf/nwiki
-            30 -> this // jester https://jesterui.github.io/
-            40 -> this // some market place?
-            7357 -> this // events that contain only an e tag?
-            else -> this
-        }
 
         fun generateId(pubKey: ByteArray, createdAt: Long, kind: Int, tags: List<List<String>>, content: String): ByteArray {
             val rawEvent = listOf(
