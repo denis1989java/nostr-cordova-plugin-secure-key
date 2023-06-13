@@ -21,7 +21,7 @@
     "sensitive-data-security",
     "encryption-decryption",
     "public-private-key",
-    "nostr"
+    "Nostr"
   ],
   "author": "Dzianis Monich",
   "license": "ISC",

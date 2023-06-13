@@ -4,7 +4,7 @@
         xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <name>nostr</name>
+    <name>Nostr</name>
     <author>Dzianis Monich</author>
 
     <description>
