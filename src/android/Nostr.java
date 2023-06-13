@@ -24,6 +24,7 @@ import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.spongycastle.util.encoders.Hex;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -44,6 +45,8 @@ import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 import javax.security.auth.x500.X500Principal;
 
+import kotlin.Triple;
+
 public class Nostr extends CordovaPlugin {
 
   private static final String DEFAULT_VAL = "NOSTR_PK";
@@ -53,25 +56,32 @@ public class Nostr extends CordovaPlugin {
 
     if (action.equals("getPublicKey")) {
 
-      String pubKey = decrypt(DEFAULT_VAL);
+      String privateKey = getPrivateKey(DEFAULT_VAL);
 
-      Log.i(TAG, "pubKey " + pubKey);
+      Log.i(TAG, "privateKey " + privateKey);
 
-      if ("".equals(pubKey)) {
+      if ("".equals(privateKey)) {
 
         prompt("MessageTest", "TitleTest", Collections.singletonList("save"), "DefaultTextTest", callbackContext);
 
         return true;
       }
 
-      callbackContext.success(initResponseJSONObject(pubKey));
+      String publicKey = generatePublicKey(privateKey);
+      Log.i(TAG, "publicKey " + publicKey);
+
+      callbackContext.success(initResponseJSONObject(publicKey));
 
       return true;
+    } else if (action.equals("signEvent")) {
+
+      callbackContext.success(args.getJSONObject(0));
+
     }
     return false;
   }
 
-  private void encrypt(String alias, String input) {
+  private void savePrivateKey(String alias, String input) {
 
     try {
 
@@ -118,7 +128,7 @@ public class Nostr extends CordovaPlugin {
 
   }
 
-  private String decrypt(String alias) {
+  private String getPrivateKey(String alias) {
     try {
       KeyStore keyStore = KeyStore.getInstance(getKeyStore());
       keyStore.load(null);
@@ -204,8 +214,10 @@ public class Nostr extends CordovaPlugin {
             (dialog, which) -> {
               dialog.dismiss();
               if (promptInput.getText() != null && !promptInput.getText().toString().trim().isEmpty()) {
-                encrypt(DEFAULT_VAL, promptInput.getText().toString());
-                JSONObject result = initResponseJSONObject(promptInput.getText().toString());
+                String privateKey = promptInput.getText().toString();
+                savePrivateKey(DEFAULT_VAL, privateKey);
+                String publicKey = generatePublicKey(privateKey);
+                JSONObject result = initResponseJSONObject(publicKey);
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, result));
               } else {
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
@@ -252,5 +264,12 @@ public class Nostr extends CordovaPlugin {
       TextView messageView = dialog.findViewById(android.R.id.message);
       messageView.setTextDirection(android.view.View.TEXT_DIRECTION_LOCALE);
     }
+  }
+
+  private String generatePublicKey(String privateKey){
+    Triple<String, byte[], Bech32.Encoding> stringEncodingTriple = Bech32.decodeBytes(privateKey, false);
+    byte[] bytes = Utils.pubkeyCreate(stringEncodingTriple.getSecond());
+    byte[] encode = Hex.encode(bytes);
+    return new String(encode, StandardCharsets.UTF_8);
   }
 }
