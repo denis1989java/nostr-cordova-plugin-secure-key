@@ -4,7 +4,7 @@
         xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <name>Nostr</name>
+    <name>nostr</name>
     <author>Dzianis Monich</author>
 
     <description>
@@ -15,21 +15,21 @@
 
     <keywords>ecosystem:cordova, ecosystem:phonegap, mobile, android, ios, android-keystore, ios-keychain, sensitive-data-security, public-private-key, encryption-decryption</keywords>
 
-    <js-module name="Nostr" src="www/nostr.js">
-        <clobbers target="cordova.plugins.Nostr" />
+    <js-module name="nostr" src="www/nostr.js">
+        <clobbers target="cordova.plugins.nostr" />
     </js-module>
 
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">
             <preference name="GradlePluginKotlinEnabled" value="true" />
-            <feature name="Nostr">
-                <param name="android-package" value="com.nostr.band.Nostr" />
+            <feature name="nostr">
+                <param name="android-package" value="com.nostr.band.nostr" />
             </feature>
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml" />
-        <source-file src="src/android/Nostr.java" target-dir="src/com/nostr/band" />
-        <source-file src="src/android/Constants.java" target-dir="src/com/nostr/band" />
-        <source-file src="src/android/KeyStorage.java" target-dir="src/com/nostr/band" />
+        <source-file src="src/android/nostr.java" target-dir="src/com/nostr/band/nostr" />
+        <source-file src="src/android/Constants.java" target-dir="src/com/nostr/band/Constants" />
+        <source-file src="src/android/KeyStorage.java" target-dir="src/com/nostr/band/KeyStorage" />
         <source-file src="src/android/Bech32Util.kt" target-dir="java/com/nostr/band/" />
         <source-file src="src/android/Utils.kt" target-dir="java/com/nostr/band/" />
         <framework custom="true" src="src/android/gradle.gradle" type="gradleReference"/>
