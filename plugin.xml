@@ -27,9 +27,9 @@
             </feature>
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml" />
-        <source-file src="src/android/Nostr.java" target-dir="src/com/nostr/band/" />
-        <source-file src="src/android/Constants.java" target-dir="src/com/nostr/band/" />
-        <source-file src="src/android/KeyStorage.java" target-dir="src/com/nostr/band/" />
+        <source-file src="src/android/Nostr.java" target-dir="src/com/nostr/band/Nostr" />
+        <source-file src="src/android/Constants.java" target-dir="src/com/nostr/band/Constants" />
+        <source-file src="src/android/KeyStorage.java" target-dir="src/com/nostr/band/KeyStorage" />
         <source-file src="src/android/Bech32Util.kt" target-dir="java/com/nostr/band/" />
         <source-file src="src/android/Utils.kt" target-dir="java/com/nostr/band/" />
         <framework custom="true" src="src/android/gradle.gradle" type="gradleReference"/>
