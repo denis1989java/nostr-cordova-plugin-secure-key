@@ -15,8 +15,8 @@
 
     <keywords>ecosystem:cordova, ecosystem:phonegap, mobile, android, ios, android-keystore, ios-keychain, sensitive-data-security, public-private-key, encryption-decryption</keywords>
 
-    <js-module name="nostr" src="www/nostr.js">
-        <clobbers target="cordova.plugins.nostr" />
+    <js-module name="Nostr" src="www/nostr.js">
+        <clobbers target="cordova.plugins.Nostr" />
     </js-module>
 
     <platform name="android">

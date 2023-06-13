@@ -1,10 +1,10 @@
 var exec = require('cordova/exec');
 
-const SERVICE_NAME = "nostr";
+const SERVICE_NAME = "Nostr";
 const SIGN_EVENT = "signEvent";
 const GET_PUBLIC_KEY = "getPublicKey";
 
-var nostr = {
+var Nostr = {
 
     signEvent: function (success, error, msg) {
         exec(success, error, SERVICE_NAME, SIGN_EVENT, [msg]);
@@ -16,4 +16,4 @@ var nostr = {
 
 };
 
-module.exports = nostr;
+module.exports = Nostr;
