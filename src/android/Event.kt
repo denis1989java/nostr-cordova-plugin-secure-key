@@ -112,10 +112,6 @@ open class Event(
                 .registerTypeAdapter(ByteArray::class.java, ByteArrayDeserializer())
                 .create()
 
-        fun fromJson(json: String, lenient: Boolean = false): Event = gson.fromJson(json, Event::class.java).getRefinedEvent(lenient)
-
-        fun fromJson(json: JsonElement, lenient: Boolean = false): Event = gson.fromJson(json, Event::class.java).getRefinedEvent(lenient)
-
         fun generateId(pubKey: ByteArray, createdAt: Long, kind: Int, tags: List<List<String>>, content: String): ByteArray {
             val rawEvent = listOf(
                     0,
