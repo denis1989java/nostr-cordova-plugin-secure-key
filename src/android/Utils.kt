@@ -21,6 +21,7 @@ object Utils {
         return bytes
     }
 
+    @JvmStatic
     fun pubkeyCreate(privKey: ByteArray) =
             secp256k1.pubKeyCompress(secp256k1.pubkeyCreate(privKey)).copyOfRange(1, 33)
 
