@@ -16,4 +16,15 @@ var nostr = {
 
 };
 
+document.addEventListener("deviceready", testFromNostrJs, false)
+
+function testFromNostrJs() {
+    console.log("DGHDGHDGHDGHDGHDGHDGHDGHGDHGDHDGHDGHDGH")
+    console.log("DGHDGHDGHDGHDGHDGHDGHDGHGDHGDHDGHDGHDGH")
+    console.log("DGHDGHDGHDGHDGHDGHDGHDGHGDHGDHDGHDGHDGH")
+    console.log("DGHDGHDGHDGHDGHDGHDGHDGHGDHGDHDGHDGHDGH")
+    console.log("DGHDGHDGHDGHDGHDGHDGHDGHGDHGDHDGHDGHDGH")
+    console.log("1111111111111111111111111111111")
+}
+
 module.exports = nostr;
