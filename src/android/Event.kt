@@ -7,33 +7,6 @@ import java.lang.reflect.Type
 import java.security.MessageDigest
 import java.util.*
 
-
-class Event(
-    val id: ByteArray,
-    @SerializedName("pubkey") val pubKey: ByteArray,
-    @SerializedName("created_at") val createdAt: Long,
-    val kind: Int,
-    val tags: List<List<String>>,
-    val content: String,
-    val sig: ByteArray,
-    val gson: Gson,
-    val sha256: MessageDigest
-) {
-    var generatedId: ByteArray? = null 
-    
-    init {
-        generatedId = generateId(gson, sha256)
-    }
-
-    fun generateId(gson: Gson, sha256: MessageDigest): ByteArray {
-        val rawEvent = listOf(0, pubKey, createdAt, kind, tags, content)
-        val rawEventJson = gson.toJson(rawEvent)
-        return sha256.digest(rawEventJson.toByteArray())
-    }
-}
-
-
-//________________________________________________________
 open class Event(
         val id: ByteArray,
         @SerializedName("pubkey") val pubKey: ByteArray,
