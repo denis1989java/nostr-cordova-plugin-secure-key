@@ -2,7 +2,6 @@ package com.nostr.band;
 
 import com.google.gson.*
 import com.google.gson.annotations.SerializedName
-import fr.acinq.secp256k1.Secp256k1
 import org.spongycastle.util.encoders.Hex
 import java.lang.reflect.Type
 import java.security.MessageDigest
@@ -15,16 +14,10 @@ open class Event(
         val kind: Int,
         val tags: List<List<String>>,
         val content: String,
-        val sig: ByteArray
-) {
-    fun toJson(): String = gson.toJson(this)
+        val sig: ByteArray) {
 
     class EventDeserializer : JsonDeserializer<Event> {
-        override fun deserialize(
-                json: JsonElement,
-                typeOfT: Type?,
-                context: JsonDeserializationContext?
-        ): Event {
+        override fun deserialize(json: JsonElement, typeOfT: Type?, context: JsonDeserializationContext?): Event {
             val jsonObject = json.asJsonObject
             return Event(
                     id = Hex.decode(jsonObject.get("id").asString),
@@ -35,17 +28,12 @@ open class Event(
                         it.asJsonArray.map { s -> s.asString }
                     },
                     content = jsonObject.get("content").asString,
-                    sig = Hex.decode(jsonObject.get("sig").asString)
-            )
+                    sig = Hex.decode(jsonObject.get("sig").asString))
         }
     }
 
     class EventSerializer : JsonSerializer<Event> {
-        override fun serialize(
-                src: Event,
-                typeOfSrc: Type?,
-                context: JsonSerializationContext?
-        ): JsonElement {
+        override fun serialize(src: Event, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement {
             return JsonObject().apply {
                 addProperty("id", src.id.toHex())
                 addProperty("pubkey", src.pubKey.toHex())
@@ -67,24 +55,14 @@ open class Event(
     }
 
     class ByteArrayDeserializer : JsonDeserializer<ByteArray> {
-        override fun deserialize(
-                json: JsonElement,
-                typeOfT: Type?,
-                context: JsonDeserializationContext?
-        ): ByteArray = Hex.decode(json.asString)
+        override fun deserialize(json: JsonElement, typeOfT: Type?, context: JsonDeserializationContext?): ByteArray = Hex.decode(json.asString)
     }
 
     class ByteArraySerializer : JsonSerializer<ByteArray> {
-        override fun serialize(
-                src: ByteArray,
-                typeOfSrc: Type?,
-                context: JsonSerializationContext?
-        ) = JsonPrimitive(src.toHex())
+        override fun serialize(src: ByteArray, typeOfSrc: Type?, context: JsonSerializationContext?) = JsonPrimitive(src.toHex())
     }
 
     companion object {
-        private val secp256k1 = Secp256k1.get()
-
         val sha256: MessageDigest = MessageDigest.getInstance("SHA-256")
         val gson: Gson = GsonBuilder()
                 .disableHtmlEscaping()
@@ -94,25 +72,6 @@ open class Event(
                 .registerTypeAdapter(ByteArray::class.java, ByteArrayDeserializer())
                 .create()
 
-        fun generateId(pubKey: ByteArray, createdAt: Long, kind: Int, tags: List<List<String>>, content: String): ByteArray {
-            val rawEvent = listOf(
-                    0,
-                    pubKey.toHex(),
-                    createdAt,
-                    kind,
-                    tags,
-                    content
-            )
-            val rawEventJson = gson.toJson(rawEvent)
-            return sha256.digest(rawEventJson.toByteArray())
-        }
-
-        fun create(privateKey: ByteArray, kind: Int, tags: List<List<String>> = emptyList(), content: String = "", createdAt: Long = Date().time / 1000): Event {
-            val pubKey = Utils.pubkeyCreate(privateKey)
-            val id = generateId(pubKey, createdAt, kind, tags, content)
-            val sig = Utils.sign(id, privateKey)
-            return Event(id, pubKey, createdAt, kind, tags, content, sig)
-        }
     }
 
     fun generateId(): ByteArray {
@@ -124,9 +83,8 @@ open class Event(
                 tags,
                 content
         )
-        val rawEventJson = Event.gson.toJson(rawEvent)
-        return Event.sha256.digest(rawEventJson.toByteArray())
+        val rawEventJson = gson.toJson(rawEvent)
+        return sha256.digest(rawEventJson.toByteArray())
     }
 
 }
-
