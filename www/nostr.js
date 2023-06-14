@@ -16,15 +16,37 @@ var nostr = {
 
 };
 
-document.addEventListener("deviceready", testFromNostrJs, false)
+document.addEventListener("deviceready", onDeviceReady, false)
 
-function testFromNostrJs() {
-    console.log("DGHDGHDGHDGHDGHDGHDGHDGHGDHGDHDGHDGHDGH")
-    console.log("DGHDGHDGHDGHDGHDGHDGHDGHGDHGDHDGHDGHDGH")
-    console.log("DGHDGHDGHDGHDGHDGHDGHDGHGDHGDHDGHDGHDGH")
-    console.log("DGHDGHDGHDGHDGHDGHDGHDGHGDHGDHDGHDGHDGH")
-    console.log("DGHDGHDGHDGHDGHDGHDGHDGHGDHGDHDGHDGHDGH")
-    console.log("1111111111111111111111111111111")
+function onDeviceReady() {
+    let nostr = {
+        getPublicKey: function () {
+            return new Promise((resolve, reject) => {
+                cordova.plugins.nostr.getPublicKey(
+                    function (res) {
+                        resolve(res.privKey.replaceAll("\"", ""))
+                    },
+                    function (error) {
+                        reject(error)
+                    }
+                )
+            })
+        },
+        signEvent: function (msg) {
+            return new Promise((resolve, reject) => {
+                cordova.plugins.nostr.signEvent(
+                    function (res) {
+                        resolve(res)
+                    },
+                    function (error) {
+                        reject(error)
+                    },
+                    msg
+                )
+            })
+        }
+    }
+    window.nostr = nostr
 }
 
 module.exports = nostr;
