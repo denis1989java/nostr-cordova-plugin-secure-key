@@ -25,6 +25,7 @@ object Utils {
     fun pubkeyCreate(privKey: ByteArray) =
             secp256k1.pubKeyCompress(secp256k1.pubkeyCreate(privKey)).copyOfRange(1, 33)
 
+    @JvmStatic
     fun sign(data: ByteArray, privKey: ByteArray): ByteArray =
             secp256k1.signSchnorr(data, privKey, null)
 

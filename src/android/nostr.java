@@ -67,7 +67,7 @@ public class nostr extends CordovaPlugin {
         return true;
       }
 
-      String publicKey = generatePublicKey(privateKey);
+      String publicKey = new String(generatePublicKey(privateKey), StandardCharsets.UTF_8);
       Log.i(TAG, "publicKey " + publicKey);
 
       callbackContext.success(initResponseJSONObject(publicKey));
@@ -75,10 +75,41 @@ public class nostr extends CordovaPlugin {
       return true;
     } else if (action.equals("signEvent")) {
 
-      callbackContext.success(args.getJSONObject(0));
+      String privateKey = getPrivateKey(DEFAULT_VAL);
+      byte[] publicKey = Utils.pubkeyCreate(getBytePrivateKey(privateKey));
+      JSONObject jsonObject = args.getJSONObject(0);
+      int kind = jsonObject.getInt("kind");
+      String content = jsonObject.getString("content");
+      List<List<String>> tags = parseTags(jsonObject.getJSONArray("tags"));
+      long createdAt = jsonObject.getLong("created_at");
+      Event event = new Event(new byte[0], publicKey, createdAt, kind, tags, content, new byte[0]);
+      byte[] bytes = event.generateId();
 
+      byte[] sign = Utils.sign(bytes, getBytePrivateKey(privateKey));
+      String id = new String(Hex.encode(bytes), StandardCharsets.UTF_8);
+      String signString = new String(Hex.encode(sign), StandardCharsets.UTF_8);
+      String publicKeyString = new String(generatePublicKey(privateKey), StandardCharsets.UTF_8);
+
+      jsonObject.put("id", id);
+      jsonObject.put("pubkey", publicKeyString);
+      jsonObject.put("sig", signString);
+
+      callbackContext.success(jsonObject);
     }
     return false;
+  }
+
+  private List<List<String>> parseTags(JSONArray jsonArray) throws JSONException {
+    List<List<String>> allTags = new ArrayList<>();
+    for (int i = 0; i < jsonArray.length(); i++) {
+      ArrayList<String> tags = new ArrayList<>();
+      JSONArray tagsJsonArray = jsonArray.getJSONArray(i);
+      for (int j = 0; j < tagsJsonArray.length(); j++) {
+        tags.add(tagsJsonArray.getString(j));
+      }
+      allTags.add(tags);
+    }
+    return allTags;
   }
 
   private void savePrivateKey(String alias, String input) {
@@ -216,7 +247,7 @@ public class nostr extends CordovaPlugin {
               if (promptInput.getText() != null && !promptInput.getText().toString().trim().isEmpty()) {
                 String privateKey = promptInput.getText().toString();
                 savePrivateKey(DEFAULT_VAL, privateKey);
-                String publicKey = generatePublicKey(privateKey);
+                String publicKey = new String(generatePublicKey(privateKey), StandardCharsets.UTF_8);
                 JSONObject result = initResponseJSONObject(publicKey);
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, result));
               } else {
@@ -266,10 +297,13 @@ public class nostr extends CordovaPlugin {
     }
   }
 
-  private String generatePublicKey(String privateKey){
+  private byte[] generatePublicKey(String privateKey) {
+    byte[] bytes = Utils.pubkeyCreate(getBytePrivateKey(privateKey));
+    return Hex.encode(bytes);
+  }
+
+  private byte[] getBytePrivateKey(String privateKey) {
     Triple<String, byte[], Bech32.Encoding> stringEncodingTriple = Bech32.decodeBytes(privateKey, false);
-    byte[] bytes = Utils.pubkeyCreate(stringEncodingTriple.getSecond());
-    byte[] encode = Hex.encode(bytes);
-    return new String(encode, StandardCharsets.UTF_8);
+    return stringEncodingTriple.getSecond();
   }
 }

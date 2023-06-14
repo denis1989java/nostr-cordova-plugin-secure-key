@@ -4,7 +4,6 @@ import com.google.gson.*
 import com.google.gson.annotations.SerializedName
 import fr.acinq.secp256k1.Secp256k1
 import org.spongycastle.util.encoders.Hex
-import java.lang.Exception
 import java.lang.reflect.Type
 import java.security.MessageDigest
 import java.util.*
@@ -19,23 +18,6 @@ open class Event(
         val sig: ByteArray
 ) {
     fun toJson(): String = gson.toJson(this)
-
-    /**
-     * Checks if the ID is correct and then if the pubKey's secret key signed the event.
-     */
-    fun checkSignature() {
-        if (!id.contentEquals(generateId())) {
-            throw Exception(
-                    """|Unexpected ID.
-                   |  Event: ${toJson()}
-                   |  Actual ID: ${id.toHex()}
-                   |  Generated: ${generateId().toHex()}""".trimIndent()
-            )
-        }
-        if (!secp256k1.verifySchnorr(sig, id, pubKey)) {
-            throw Exception("""Bad signature!""")
-        }
-    }
 
     class EventDeserializer : JsonDeserializer<Event> {
         override fun deserialize(
@@ -132,17 +114,19 @@ open class Event(
             return Event(id, pubKey, createdAt, kind, tags, content, sig)
         }
     }
+
+    fun generateId(): ByteArray {
+        val rawEvent = listOf(
+                0,
+                pubKey,
+                createdAt,
+                kind,
+                tags,
+                content
+        )
+        val rawEventJson = Event.gson.toJson(rawEvent)
+        return Event.sha256.digest(rawEventJson.toByteArray())
+    }
+
 }
 
-fun Event.generateId(): ByteArray {
-    val rawEvent = listOf(
-            0,
-            pubKey.toHex(),
-            createdAt,
-            kind,
-            tags,
-            content
-    )
-    val rawEventJson = Event.gson.toJson(rawEvent)
-    return Event.sha256.digest(rawEventJson.toByteArray())
-}
