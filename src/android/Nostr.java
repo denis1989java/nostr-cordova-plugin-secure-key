@@ -1,5 +1,8 @@
 package com.nostr.band;
 
+import static com.nostr.band.KeyStorage.readValues;
+import static com.nostr.band.KeyStorage.writeValues;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -146,7 +149,7 @@ public class Nostr extends CordovaPlugin {
       cipherOutputStream.close();
       byte[] vals = outputStream.toByteArray();
 
-      KeyStorage1.writeValues(getContext(), alias, vals);
+      writeValues(getContext(), alias, vals);
       Log.i(TAG, "key created and stored successfully");
 
     } catch (Exception e) {
@@ -163,7 +166,7 @@ public class Nostr extends CordovaPlugin {
 
       Cipher output = Cipher.getInstance(RSA_ALGORITHM);
       output.init(Cipher.DECRYPT_MODE, privateKey);
-      CipherInputStream cipherInputStream = new CipherInputStream(new ByteArrayInputStream(KeyStorage1.readValues(getContext(), alias)), output);
+      CipherInputStream cipherInputStream = new CipherInputStream(new ByteArrayInputStream(readValues(getContext(), alias)), output);
 
       ArrayList<Byte> values = new ArrayList<>();
       int nextByte;
