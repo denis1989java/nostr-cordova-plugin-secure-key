@@ -22,12 +22,12 @@
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">
             <preference name="GradlePluginKotlinEnabled" value="true" />
-            <feature name="nostr">
-                <param name="android-package" value="com.nostr.band.nostr" />
+            <feature name="Nostr">
+                <param name="android-package" value="com.nostr.band.Nostr" />
             </feature>
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml" />
-        <source-file src="src/android/nostr.java" target-dir="src/com/nostr/band/nostr" />
+        <source-file src="src/android/Nostr.java" target-dir="src/com/nostr/band/" />
         <source-file src="src/android/KeyStorage.java" target-dir="src/com/nostr/band/KeyStorage" />
         <source-file src="src/android/Bech32Util.kt" target-dir="java/com/nostr/band/" />
         <source-file src="src/android/Utils.kt" target-dir="java/com/nostr/band/" />
