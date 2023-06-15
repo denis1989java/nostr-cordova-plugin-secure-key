@@ -1,10 +1,5 @@
 package com.nostr.band;
 
-import static com.nostr.band.Constants.KEYSTORE_PROVIDER_1;
-import static com.nostr.band.Constants.KEYSTORE_PROVIDER_2;
-import static com.nostr.band.Constants.KEYSTORE_PROVIDER_3;
-import static com.nostr.band.Constants.RSA_ALGORITHM;
-import static com.nostr.band.Constants.TAG;
 import static com.nostr.band.KeyStorage.readValues;
 import static com.nostr.band.KeyStorage.writeValues;
 
@@ -50,6 +45,11 @@ import kotlin.Triple;
 public class nostr extends CordovaPlugin {
 
   private static final String DEFAULT_VAL = "NOSTR_PK";
+  private static final String KEYSTORE_PROVIDER_1 = "AndroidKeyStore";
+  private static final String KEYSTORE_PROVIDER_2 = "AndroidKeyStoreBCWorkaround";
+  private static final String KEYSTORE_PROVIDER_3 = "AndroidOpenSSL";
+  private static final String RSA_ALGORITHM = "RSA/ECB/PKCS1Padding";
+  private static final String TAG = "NostrLogTag";
 
   @Override
   public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -82,8 +82,7 @@ public class nostr extends CordovaPlugin {
       String content = jsonObject.getString("content");
       List<List<String>> tags = parseTags(jsonObject.getJSONArray("tags"));
       long createdAt = jsonObject.getLong("created_at");
-      Event event = new Event(new byte[0], publicKey, createdAt, kind, tags, content, new byte[0]);
-      byte[] bytes = event.generateId();
+      byte[] bytes = Utils.generateId(publicKey, createdAt, kind, tags, content);
 
       byte[] sign = Utils.sign(bytes, getBytePrivateKey(privateKey));
       String id = new String(Hex.encode(bytes), StandardCharsets.UTF_8);
@@ -182,7 +181,7 @@ public class nostr extends CordovaPlugin {
       return new String(bytes, 0, bytes.length, StandardCharsets.UTF_8);
 
     } catch (Exception e) {
-      Log.e(com.nostr.band.Constants.TAG, "Exception: " + e.getMessage());
+      Log.e(TAG, "Exception: " + e.getMessage());
       return "";
     }
   }

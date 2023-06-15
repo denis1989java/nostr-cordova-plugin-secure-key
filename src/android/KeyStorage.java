@@ -2,9 +2,6 @@ package com.nostr.band;
 
 // Helper function for storing keys to internal storage.
 
-import static com.nostr.band.Constants.SKS_FILENAME;
-import static com.nostr.band.Constants.TAG;
-
 import android.content.Context;
 import android.util.Log;
 
@@ -13,6 +10,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 public final class KeyStorage {
+
+  private static final String SKS_FILENAME = "SKS_KEY_FILE";
+  private static final String TAG = "KeyStorageLogTag";
 
   public KeyStorage() {
   }

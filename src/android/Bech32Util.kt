@@ -93,7 +93,10 @@ object Bech32 {
      * @return a (hrp, data, encoding) tuple
      */
     @JvmStatic
-    fun decodeBytes(bech32: String, noChecksum: Boolean = false): Triple<String, ByteArray, Encoding> {
+    fun decodeBytes(
+            bech32: String,
+            noChecksum: Boolean = false
+    ): Triple<String, ByteArray, Encoding> {
         val (hrp, int5s, encoding) = decode(bech32, noChecksum)
         return Triple(hrp, five2eight(int5s, 0), encoding)
     }

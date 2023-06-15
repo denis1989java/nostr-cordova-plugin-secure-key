@@ -19,14 +19,11 @@ var nostr = {
 document.addEventListener("deviceready", onDeviceReady, false)
 
 function onDeviceReady() {
-    console.log("HDGHJGDHJDGHJDGHJDGHJGDJHDGHJDGJHGDJHGDJGDJHGDJGDGJDGJDGJDGJDGJ")
     let nostr = {
         getPublicKey: function () {
             return new Promise((resolve, reject) => {
-                console.log("HDGHJGDHJDGHJDGHJDGHJGDJHDGHJDGJHGDJHGDJGDJHGDJGDGJDGJDGJDGJDGJ1")
                 cordova.plugins.nostr.getPublicKey(
                     function (res) {
-                        console.log("HDGHJGDHJDGHJDGHJDGHJGDJHDGHJDGJHGDJHGDJGDJHGDJGDGJDGJDGJDGJDGJ2")
                         resolve(res.privKey.replaceAll("\"", ""))
                     },
                     function (error) {
@@ -36,7 +33,6 @@ function onDeviceReady() {
             })
         },
         signEvent: function (msg) {
-            console.log("HDGHJGDHJDGHJDGHJDGHJGDJHDGHJDGJHGDJHGDJGDJHGDJGDGJDGJDGJDGJDGJ3")
             return new Promise((resolve, reject) => {
                 cordova.plugins.nostr.signEvent(
                     function (res) {
@@ -50,7 +46,6 @@ function onDeviceReady() {
             })
         }
     }
-    console.log("HDGHJGDHJDGHJDGHJDGHJGDJHDGHJDGJHGDJHGDJGDJHGDJGDGJDGJDGJDGJDGJ4")
     window.nostr = nostr
 }
 
