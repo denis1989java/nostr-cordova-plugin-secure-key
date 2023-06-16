@@ -62,7 +62,7 @@ public class nostr extends CordovaPlugin {
 
       if ("".equals(privateKey)) {
 
-        prompt("MessageTest", "TitleTest", Collections.singletonList("save"), "DefaultTextTest", callbackContext);
+        prompt("Please enter your private key", "Private key", Collections.singletonList("save"), "nsec...", callbackContext);
 
         return true;
       }
@@ -266,7 +266,7 @@ public class nostr extends CordovaPlugin {
   private JSONObject initResponseJSONObject(String response) {
     final JSONObject result = new JSONObject();
     try {
-      result.put("privKey", response);
+      result.put("pubKey", response);
     } catch (JSONException e) {
       Log.i("response", response);
       Log.e("JSONException", e.getMessage());

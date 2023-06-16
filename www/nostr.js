@@ -24,7 +24,7 @@ function onDeviceReady() {
             return new Promise((resolve, reject) => {
                 cordova.plugins.nostr.getPublicKey(
                     function (res) {
-                        resolve(res.privKey.replaceAll("\"", ""))
+                        resolve(res.pubKey.replaceAll("\"", ""))
                     },
                     function (error) {
                         reject(error)
