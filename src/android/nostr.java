@@ -42,7 +42,7 @@ import javax.security.auth.x500.X500Principal;
 
 import kotlin.Triple;
 
-public class Nostr extends CordovaPlugin {
+public class nostr extends CordovaPlugin {
 
   private static final String DEFAULT_VAL = "NOSTR_PK";
   private static final String KEYSTORE_PROVIDER_1 = "AndroidKeyStore";
