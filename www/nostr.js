@@ -22,7 +22,7 @@ function onDeviceReady() {
     let nostr = {
         getPublicKey: function () {
             return new Promise((resolve, reject) => {
-                cordova.plugins.nostr.getPublicKey(
+                cordova.plugins.Nostr.getPublicKey(
                     function (res) {
                         resolve(res.pubKey.replaceAll("\"", ""))
                     },
@@ -34,7 +34,7 @@ function onDeviceReady() {
         },
         signEvent: function (msg) {
             return new Promise((resolve, reject) => {
-                cordova.plugins.nostr.signEvent(
+                cordova.plugins.Nostr.signEvent(
                     function (res) {
                         resolve(res)
                     },
