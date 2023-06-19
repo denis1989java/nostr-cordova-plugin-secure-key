@@ -24,9 +24,11 @@ function onDeviceReady() {
             return new Promise((resolve, reject) => {
                 cordova.plugins.nostr.getPublicKey(
                     function (res) {
+                        console.log(JSON.stringify(res))
                         resolve(res.pubKey.replaceAll("\"", ""))
                     },
                     function (error) {
+                        console.log(JSON.stringify(error))
                         reject(error)
                     }
                 )
@@ -36,9 +38,11 @@ function onDeviceReady() {
             return new Promise((resolve, reject) => {
                 cordova.plugins.nostr.signEvent(
                     function (res) {
+                        console.log(JSON.stringify(res))
                         resolve(res)
                     },
                     function (error) {
+                        console.log(JSON.stringify(error))
                         reject(error)
                     },
                     msg
