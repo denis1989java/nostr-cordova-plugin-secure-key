@@ -1,6 +1,6 @@
 var exec = require('cordova/exec');
 
-const SERVICE_NAME = "nostr";
+const SERVICE_NAME = "Nostr";
 const SIGN_EVENT = "signEvent";
 const GET_PUBLIC_KEY = "getPublicKey";
 
