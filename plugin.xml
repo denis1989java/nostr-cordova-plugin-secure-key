@@ -22,7 +22,7 @@
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">
             <preference name="GradlePluginKotlinEnabled" value="true" />
-            <feature name="nostr">
+            <feature name="NostrKeyStore">
                 <param name="android-package" value="com.nostr.band.Nostr" />
             </feature>
         </config-file>
