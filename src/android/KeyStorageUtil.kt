@@ -1,4 +1,4 @@
-package com.nostr.band.keyStore
+package com.nostr.band.keyStore;
 
 import android.content.Context
 import android.util.Log
