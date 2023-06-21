@@ -1,4 +1,4 @@
-package com.nostr.band;
+package com.nostr.band.keyStore;
 
 /**
  * Bech32 works with 5 bits values, we use this type to make it explicit: whenever you see Int5 it means 5 bits values,

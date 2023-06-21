@@ -1,10 +1,10 @@
 var exec = require('cordova/exec');
 
-const SERVICE_NAME = "nostr";
+const SERVICE_NAME = "NostrKeyStore";
 const SIGN_EVENT = "signEvent";
 const GET_PUBLIC_KEY = "getPublicKey";
 
-var nostr = {
+var NostrKeyStore = {
 
     signEvent: function (success, error, msg) {
         exec(success, error, SERVICE_NAME, SIGN_EVENT, [msg]);
@@ -19,10 +19,10 @@ var nostr = {
 document.addEventListener("deviceready", onDeviceReady, false)
 
 function onDeviceReady() {
-    let nostr = {
+    let NostrKeyStore = {
         getPublicKey: function () {
             return new Promise((resolve, reject) => {
-                cordova.plugins.nostr.getPublicKey(
+                cordova.plugins.NostrKeyStore.getPublicKey(
                     function (res) {
                         resolve(res.pubKey.replaceAll("\"", ""))
                     },
@@ -34,7 +34,7 @@ function onDeviceReady() {
         },
         signEvent: function (msg) {
             return new Promise((resolve, reject) => {
-                cordova.plugins.nostr.signEvent(
+                cordova.plugins.NostrKeyStore.signEvent(
                     function (res) {
                         resolve(res)
                     },
@@ -46,7 +46,7 @@ function onDeviceReady() {
             })
         }
     }
-    window.nostr = nostr
+    window.nostr = NostrKeyStore
 }
 
-module.exports = nostr;
+module.exports = NostrKeyStore;

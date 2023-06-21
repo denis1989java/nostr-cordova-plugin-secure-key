@@ -4,7 +4,7 @@
         xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <name>nostr</name>
+    <name>Nostr</name>
     <author>Dzianis Monich</author>
 
     <description>
@@ -15,8 +15,8 @@
 
     <keywords>ecosystem:cordova, ecosystem:phonegap, mobile, android, ios, android-keystore, ios-keychain, sensitive-data-security, public-private-key, encryption-decryption</keywords>
 
-    <js-module name="nostr" src="www/nostr.js">
-        <clobbers target="cordova.plugins.nostr" />
+    <js-module name="NostrKeyStore" src="www/nostr.js">
+        <clobbers target="cordova.plugins.NostrKeyStore" />
     </js-module>
 
     <platform name="android">
@@ -27,14 +27,14 @@
             </feature>
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml" />
-        <source-file src="src/android/Nostr.java" target-dir="src/com/nostr/band/" />
-        <source-file src="src/android/KeyStorageUtil.kt" target-dir="src/com/nostr/band/" />
-        <source-file src="src/android/Bech32Util.kt" target-dir="java/com/nostr/band/" />
-        <source-file src="src/android/Utils.kt" target-dir="java/com/nostr/band/" />
+        <source-file src="src/android/Nostr.java" target-dir="src/com/nostr/band/keyStore/" />
+        <source-file src="src/android/KeyStorageUtil.kt" target-dir="src/com/nostr/band/keyStore/" />
+        <source-file src="src/android/Bech32Util.kt" target-dir="java/com/nostr/band/keyStore/" />
+        <source-file src="src/android/Utils.kt" target-dir="java/com/nostr/band/keyStore/" />
         <framework custom="true" src="src/android/gradle.gradle" type="gradleReference"/>
 
         <config-file target="AndroidManifest.xml" parent="application">
-            <activity android:name="com.nostr.band.ModalActivity"></activity>
+            <activity android:name="com.nostr.band.keyStore.ModalActivity"></activity>
         </config-file>
 
     </platform>

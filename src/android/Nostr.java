@@ -1,4 +1,4 @@
-package com.nostr.band;
+package com.nostr.band.keyStore;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;

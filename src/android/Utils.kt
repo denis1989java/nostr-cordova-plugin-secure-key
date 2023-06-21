@@ -1,4 +1,4 @@
-package com.nostr.band;
+package com.nostr.band.keyStore;
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -11,8 +11,11 @@ import java.lang.reflect.Type
 import java.security.MessageDigest
 
 object Utils {
+
     private val secp256k1 = Secp256k1.get()
+
     private val sha256: MessageDigest = MessageDigest.getInstance("SHA-256")
+
     private val gson: Gson = GsonBuilder()
             .disableHtmlEscaping()
             .registerTypeAdapter(ByteArray::class.java, ByteArraySerializer())
@@ -39,12 +42,10 @@ object Utils {
     }
 
     @JvmStatic
-    fun pubkeyCreate(privKey: ByteArray) =
-            secp256k1.pubKeyCompress(secp256k1.pubkeyCreate(privKey)).copyOfRange(1, 33)
+    fun pubkeyCreate(privKey: ByteArray) = secp256k1.pubKeyCompress(secp256k1.pubkeyCreate(privKey)).copyOfRange(1, 33)
 
     @JvmStatic
-    fun sign(data: ByteArray, privKey: ByteArray): ByteArray =
-            secp256k1.signSchnorr(data, privKey, null)
+    fun sign(data: ByteArray, privKey: ByteArray): ByteArray = secp256k1.signSchnorr(data, privKey, null)
 
 }
 
