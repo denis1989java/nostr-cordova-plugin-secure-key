@@ -23,7 +23,7 @@
         <config-file parent="/*" target="res/xml/config.xml">
             <preference name="GradlePluginKotlinEnabled" value="true" />
             <feature name="NostrKeyStore">
-                <param name="android-package" value="com.nostr.band.Nostr" />
+                <param name="android-package" value="com.nostr.band.keyStore.Nostr" />
             </feature>
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml" />
