@@ -51,7 +51,10 @@ function onDeviceReady() {
 
     document.addEventListener("backbutton", function (e) {
         console.log("EEEEEEEEEEEEEEEEEEEE")
-        console.log(document.referrer)
+        console.log("SSSS" + document.referrer + "LLLL")
+        if(window.history){
+            console.log("window.history" + window.history.length + "OOOOOO")
+        }
         console.log("RRRRRRRRRRRRRRR")
         if (document.referrer === "") { //you check that there is nothing left in the history.
             console.log("KKKKKKKKKKKKKKK")
