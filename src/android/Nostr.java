@@ -27,10 +27,7 @@ import java.security.KeyPairGenerator;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
@@ -59,7 +56,7 @@ public class Nostr extends CordovaPlugin {
 
       if ("".equals(privateKey)) {
 
-        prompt("Please enter your private key", "Private key", Collections.singletonList("save"), "nsec...", callbackContext);
+        prompt("Please enter your private key", "Private key", Arrays.asList("cancel", "save"), "nsec...", callbackContext);
 
         return true;
       }
@@ -207,7 +204,8 @@ public class Nostr extends CordovaPlugin {
       final EditText promptInput = initInput(defaultText);
       AlertDialog.Builder alertDialog = initAlertDialog(promptInput, message, title);
 
-      setNegativeButton(alertDialog, buttonLabels.get(0), promptInput, callbackContext);
+      setNegativeButton(alertDialog, buttonLabels.get(0), callbackContext);
+      setPositiveButton(alertDialog, buttonLabels.get(1), promptInput, callbackContext);
       setOnCancelListener(alertDialog, callbackContext);
       changeTextDirection(alertDialog);
     };
@@ -236,8 +234,8 @@ public class Nostr extends CordovaPlugin {
     return alertDialog;
   }
 
-  private void setNegativeButton(AlertDialog.Builder alertDialog, String buttonLabel, EditText promptInput, CallbackContext callbackContext) {
-    alertDialog.setNegativeButton(buttonLabel,
+  private void setPositiveButton(AlertDialog.Builder alertDialog, String buttonLabel, EditText promptInput, CallbackContext callbackContext) {
+    alertDialog.setPositiveButton(buttonLabel,
             (dialog, which) -> {
               dialog.dismiss();
               if (promptInput.getText() != null && !promptInput.getText().toString().trim().isEmpty()) {
@@ -249,6 +247,14 @@ public class Nostr extends CordovaPlugin {
               } else {
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
               }
+            });
+  }
+
+  private void setNegativeButton(AlertDialog.Builder alertDialog, String buttonLabel, CallbackContext callbackContext) {
+    alertDialog.setNegativeButton(buttonLabel,
+            (dialog, which) -> {
+              dialog.dismiss();
+              callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
             });
   }
 
