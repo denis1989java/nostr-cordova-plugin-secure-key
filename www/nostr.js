@@ -53,10 +53,10 @@ function onDeviceReady() {
         console.log("EEEEEEEEEEEEEEEEEEEE")
         console.log("SSSS" + document.referrer + "LLLL")
         if(window.history){
-            console.log("window.history" + window.history.length + "OOOOOO")
+            console.log("window.history " + window.history.length + " OOOOOO")
         }
         console.log("RRRRRRRRRRRRRRR")
-        if (document.referrer === "") { //you check that there is nothing left in the history.
+        if (!window.history || window.history.length < 1) { //you check that there is nothing left in the history.
             console.log("KKKKKKKKKKKKKKK")
             e.preventDefault();
             navigator.app.exitApp();
