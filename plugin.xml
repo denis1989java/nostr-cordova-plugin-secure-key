@@ -8,12 +8,12 @@
     <author>Dzianis Monich</author>
 
     <description>
-        Cordova plugin for securely saving keys, passwords or strings on devices.
+        Cordova plugin for Nostr key storage and management.
     </description>
 
-    <license>ISC</license>
+    <license>MIT</license>
 
-    <keywords>ecosystem:cordova, ecosystem:phonegap, mobile, android, ios, android-keystore, ios-keychain, sensitive-data-security, public-private-key, encryption-decryption</keywords>
+    <keywords>ecosystem:cordova, mobile, android, nostr, keystore</keywords>
 
     <js-module name="NostrKeyStore" src="www/nostr.js">
         <clobbers target="cordova.plugins.NostrKeyStore" />
