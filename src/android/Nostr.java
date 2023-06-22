@@ -6,8 +6,13 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.security.KeyPairGeneratorSpec;
 import android.util.Log;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.android.material.R;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
@@ -27,7 +32,10 @@ import java.security.KeyPairGenerator;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
@@ -201,7 +209,7 @@ public class Nostr extends CordovaPlugin {
   private synchronized void prompt(String message, String title, List<String> buttonLabels, String defaultText, final CallbackContext callbackContext) {
 
     Runnable runnable = () -> {
-      final EditText promptInput = initInput(defaultText);
+      final TextInputLayout promptInput = initInput(defaultText);
       AlertDialog.Builder alertDialog = initAlertDialog(promptInput, message, title);
 
       setNegativeButton(alertDialog, buttonLabels.get(0), callbackContext);
@@ -213,18 +221,33 @@ public class Nostr extends CordovaPlugin {
     this.cordova.getActivity().runOnUiThread(runnable);
   }
 
-  private EditText initInput(String defaultText) {
+  @SuppressLint("RestrictedApi")
+  private TextInputLayout initInput(String defaultText) {
     final EditText promptInput = new EditText(cordova.getActivity());
+
+    TextInputLayout textInputLayout = new TextInputLayout(cordova.getActivity(), null, R.style.Widget_MaterialComponents_TextInputLayout_OutlinedBox);
+    textInputLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+    textInputLayout.setBackground(null);
+    textInputLayout.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_OUTLINE);
+
+    //textInputLayout.setBoxBackgroundColor(Color.WHITEtextInputLayout.setPadding(ViewUtils.dpToPx(cordova.getActivity(), 16), dpToPx(cordova.getActivity(), 4), dpToPx(cordova.getActivity(), 4), dpToPx(cordova.getActivity(), 16)));
+    //textInputLayout.setBoxStrokeColor(Color.GRAYtextInputLayout.boxStrokeWidth = dpToPx(cordova.getActivity(), 2));
+
+    TextInputEditText editText = new TextInputEditText(cordova.getActivity());
+    editText.setHint("Private key");
+    editText.setText(defaultText);
+    textInputLayout.addView(editText, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
 
     Resources resources = cordova.getActivity().getResources();
     int promptInputTextColor = resources.getColor(android.R.color.primary_text_light);
     promptInput.setTextColor(promptInputTextColor);
     promptInput.setText(defaultText);
 
-    return promptInput;
+    return textInputLayout;
   }
 
-  private AlertDialog.Builder initAlertDialog(EditText input, String message, String title) {
+  private AlertDialog.Builder initAlertDialog(TextInputLayout input, String message, String title) {
     AlertDialog.Builder alertDialog = createDialog(cordova);
     alertDialog.setMessage(message);
     alertDialog.setTitle(title);
@@ -234,12 +257,12 @@ public class Nostr extends CordovaPlugin {
     return alertDialog;
   }
 
-  private void setPositiveButton(AlertDialog.Builder alertDialog, String buttonLabel, EditText promptInput, CallbackContext callbackContext) {
+  private void setPositiveButton(AlertDialog.Builder alertDialog, String buttonLabel, TextInputLayout promptInput, CallbackContext callbackContext) {
     alertDialog.setPositiveButton(buttonLabel,
             (dialog, which) -> {
               dialog.dismiss();
-              if (promptInput.getText() != null && !promptInput.getText().toString().trim().isEmpty()) {
-                String privateKey = promptInput.getText().toString();
+              if (promptInput.getEditText().getText() != null && !promptInput.getEditText().getText().toString().trim().isEmpty()) {
+                String privateKey = promptInput.getEditText().getText().toString();
                 savePrivateKey(DEFAULT_VAL, privateKey);
                 String publicKey = new String(generatePublicKey(privateKey), StandardCharsets.UTF_8);
                 JSONObject result = initResponseJSONObject(publicKey);
