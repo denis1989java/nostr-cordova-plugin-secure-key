@@ -8,12 +8,12 @@
     <author>Dzianis Monich</author>
 
     <description>
-        Cordova plugin for Nostr key storage and management.
+        Cordova plugin for securely saving keys, passwords or strings on devices.
     </description>
 
-    <license>MIT</license>
+    <license>ISC</license>
 
-    <keywords>ecosystem:cordova, mobile, android, nostr, keystore</keywords>
+    <keywords>ecosystem:cordova, ecosystem:phonegap, mobile, android, ios, android-keystore, ios-keychain, sensitive-data-security, public-private-key, encryption-decryption</keywords>
 
     <js-module name="NostrKeyStore" src="www/nostr.js">
         <clobbers target="cordova.plugins.NostrKeyStore" />
@@ -23,14 +23,14 @@
         <config-file parent="/*" target="res/xml/config.xml">
             <preference name="GradlePluginKotlinEnabled" value="true" />
             <feature name="NostrKeyStore">
-                <param name="android-package" value="android.com.nostr.band.keyStore.Nostr" />
+                <param name="android-package" value="com.nostr.band.keyStore.Nostr" />
             </feature>
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml" />
-        <source-file src="src/android/com/nostr/band/keyStore/Nostr.java" target-dir="src/com/nostr/band/keyStore" />
-        <source-file src="src/android/com/nostr/band/keyStore/KeyStorageUtil.kt" target-dir="java/com/nostr/band/keyStore/" />
-        <source-file src="src/android/com/nostr/band/keyStore/Bech32Util.kt" target-dir="java/com/nostr/band/keyStore/" />
-        <source-file src="src/android/com/nostr/band/keyStore/Utils.kt" target-dir="java/com/nostr/band/keyStore/" />
+        <source-file src="src/android/Nostr.java" target-dir="src/com/nostr/band/keyStore" />
+        <source-file src="src/android/KeyStorageUtil.kt" target-dir="java/com/nostr/band/keyStore/" />
+        <source-file src="src/android/Bech32Util.kt" target-dir="java/com/nostr/band/keyStore/" />
+        <source-file src="src/android/Utils.kt" target-dir="java/com/nostr/band/keyStore/" />
         <framework custom="true" src="src/android/gradle.gradle" type="gradleReference"/>
 
         <config-file target="AndroidManifest.xml" parent="application">
