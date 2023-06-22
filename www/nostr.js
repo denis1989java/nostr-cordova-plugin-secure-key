@@ -62,7 +62,6 @@ function onDeviceReady() {
             navigator.app.exitApp();
         } else {
             console.log("LLLLLLLLLLLLLLLLLL")
-            e.preventDefault();
             window.history.back();
         }
     });
