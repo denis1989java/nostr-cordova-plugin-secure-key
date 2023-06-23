@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget..TextInputLayout
+<android.support.design.widget.TextInputLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
@@ -14,4 +14,4 @@
             android:hint="Private key"
             android:inputType="text" />
 
-</android.support.design.widget..TextInputLayout>
+</android.support.design.widget.TextInputLayout>
