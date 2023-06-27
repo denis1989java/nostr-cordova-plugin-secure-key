@@ -3,11 +3,9 @@ package com.nostr.band.keyStore;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.res.Resources;
+import android.graphics.Color;
 import android.security.KeyPairGeneratorSpec;
 import android.util.Log;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.material.R;
@@ -223,26 +221,18 @@ public class Nostr extends CordovaPlugin {
 
   @SuppressLint("RestrictedApi")
   private TextInputLayout initInput(String defaultText) {
-    final EditText promptInput = new EditText(cordova.getActivity());
 
     TextInputLayout textInputLayout = new TextInputLayout(cordova.getActivity(), null, R.style.Widget_MaterialComponents_TextInputLayout_OutlinedBox);
-    textInputLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-    textInputLayout.setBackground(null);
-    textInputLayout.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_OUTLINE);
+    textInputLayout.setBoxStrokeColor(Color.BLACK);
+    textInputLayout.setPadding(50, 0, 50, 0);
 
-    //textInputLayout.setBoxBackgroundColor(Color.WHITEtextInputLayout.setPadding(ViewUtils.dpToPx(cordova.getActivity(), 16), dpToPx(cordova.getActivity(), 4), dpToPx(cordova.getActivity(), 4), dpToPx(cordova.getActivity(), 16)));
-    //textInputLayout.setBoxStrokeColor(Color.GRAYtextInputLayout.boxStrokeWidth = dpToPx(cordova.getActivity(), 2));
+    TextInputEditText editText = new TextInputEditText(textInputLayout.getContext());
+    editText.setBackgroundColor(Color.WHITE);
 
-    TextInputEditText editText = new TextInputEditText(cordova.getActivity());
-    editText.setHint("Private key");
+    editText.setTextColor(Color.BLACK);
     editText.setText(defaultText);
-    textInputLayout.addView(editText, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-
-
-    Resources resources = cordova.getActivity().getResources();
-    int promptInputTextColor = resources.getColor(android.R.color.primary_text_light);
-    promptInput.setTextColor(promptInputTextColor);
-    promptInput.setText(defaultText);
+    editText.setPadding(50, editText.getPaddingTop(), editText.getPaddingRight(), editText.getPaddingBottom());
+    textInputLayout.addView(editText);
 
     return textInputLayout;
   }
@@ -284,8 +274,7 @@ public class Nostr extends CordovaPlugin {
   private void setOnCancelListener(AlertDialog.Builder alertDialog, CallbackContext callbackContext) {
     alertDialog.setOnCancelListener(dialog -> {
       dialog.dismiss();
-      JSONObject result = initResponseJSONObject("");
-      callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, result));
+      callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
     });
   }
 
