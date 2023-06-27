@@ -7,11 +7,10 @@ import android.graphics.Color;
 import android.security.KeyPairGeneratorSpec;
 import android.util.Log;
 import android.widget.TextView;
-
 import com.google.android.material.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-
+import kotlin.Triple;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
@@ -21,26 +20,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.spongycastle.util.encoders.Hex;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.KeyStore;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
-
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 import javax.security.auth.x500.X500Principal;
-
-import kotlin.Triple;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 
 public class Nostr extends CordovaPlugin {
 
@@ -56,46 +48,60 @@ public class Nostr extends CordovaPlugin {
 
     if (action.equals("getPublicKey")) {
 
-      String privateKey = getPrivateKey(DEFAULT_VAL);
+      return getPublicKey(callbackContext);
 
-      Log.i(TAG, "privateKey " + privateKey);
-
-      if ("".equals(privateKey)) {
-
-        prompt("Please enter your private key", "Private key", Arrays.asList("cancel", "save"), "nsec...", callbackContext);
-
-        return true;
-      }
-
-      String publicKey = new String(generatePublicKey(privateKey), StandardCharsets.UTF_8);
-      Log.i(TAG, "publicKey " + publicKey);
-
-      callbackContext.success(initResponseJSONObject(publicKey));
-
-      return true;
     } else if (action.equals("signEvent")) {
 
-      String privateKey = getPrivateKey(DEFAULT_VAL);
-      byte[] publicKey = Utils.pubkeyCreate(getBytePrivateKey(privateKey));
-      JSONObject jsonObject = args.getJSONObject(0);
-      int kind = jsonObject.getInt("kind");
-      String content = jsonObject.getString("content");
-      List<List<String>> tags = parseTags(jsonObject.getJSONArray("tags"));
-      long createdAt = jsonObject.getLong("created_at");
-      byte[] bytes = Utils.generateId(publicKey, createdAt, kind, tags, content);
-
-      byte[] sign = Utils.sign(bytes, getBytePrivateKey(privateKey));
-      String id = new String(Hex.encode(bytes), StandardCharsets.UTF_8);
-      String signString = new String(Hex.encode(sign), StandardCharsets.UTF_8);
-      String publicKeyString = new String(generatePublicKey(privateKey), StandardCharsets.UTF_8);
-
-      jsonObject.put("id", id);
-      jsonObject.put("pubkey", publicKeyString);
-      jsonObject.put("sig", signString);
-
-      callbackContext.success(jsonObject);
+      return signEvent(args, callbackContext);
     }
+
     return false;
+  }
+
+  private boolean getPublicKey(CallbackContext callbackContext) {
+
+    String privateKey = getPrivateKey(DEFAULT_VAL);
+
+    Log.i(TAG, "privateKey " + privateKey);
+
+    if ("".equals(privateKey)) {
+
+      prompt("Please enter your private key", "Private key", Arrays.asList("cancel", "save"), "nsec...", callbackContext);
+
+      return true;
+    }
+
+    String publicKey = new String(generatePublicKey(privateKey), StandardCharsets.UTF_8);
+    Log.i(TAG, "publicKey " + publicKey);
+
+    callbackContext.success(initResponseJSONObject(publicKey));
+
+    return true;
+  }
+
+  private boolean signEvent(JSONArray args, CallbackContext callbackContext) throws JSONException {
+
+    String privateKey = getPrivateKey(DEFAULT_VAL);
+    byte[] publicKey = Utils.pubkeyCreate(getBytePrivateKey(privateKey));
+    JSONObject jsonObject = args.getJSONObject(0);
+    int kind = jsonObject.getInt("kind");
+    String content = jsonObject.getString("content");
+    List<List<String>> tags = parseTags(jsonObject.getJSONArray("tags"));
+    long createdAt = jsonObject.getLong("created_at");
+    byte[] bytes = Utils.generateId(publicKey, createdAt, kind, tags, content);
+
+    byte[] sign = Utils.sign(bytes, getBytePrivateKey(privateKey));
+    String id = new String(Hex.encode(bytes), StandardCharsets.UTF_8);
+    String signString = new String(Hex.encode(sign), StandardCharsets.UTF_8);
+    String publicKeyString = new String(generatePublicKey(privateKey), StandardCharsets.UTF_8);
+
+    jsonObject.put("id", id);
+    jsonObject.put("pubkey", publicKeyString);
+    jsonObject.put("sig", signString);
+
+    callbackContext.success(jsonObject);
+
+    return true;
   }
 
   private List<List<String>> parseTags(JSONArray jsonArray) throws JSONException {
@@ -232,6 +238,7 @@ public class Nostr extends CordovaPlugin {
     editText.setTextColor(Color.BLACK);
     editText.setText(defaultText);
     editText.setPadding(50, editText.getPaddingTop(), editText.getPaddingRight(), editText.getPaddingBottom());
+
     textInputLayout.addView(editText);
 
     return textInputLayout;
