@@ -50,14 +50,10 @@ function onDeviceReady() {
     window.nostr = NostrKeyStore
 
     document.addEventListener("backbutton", function (e) {
-        console.log(window.history)
-        console.log(JSON.stringify(window.history.state))
         if (!window.history || JSON.stringify(window.history.state) === 'null') { //you check that there is nothing left in the history.
             e.preventDefault();
-            console.log("DFDFDFDGFDGFDGFDGFDGFDGFDGFDGFGDFGDFGDFGDFGDFGDFG")
             navigator.app.exitApp();
         } else {
-            console.log("DFDFDFDGFDGFDGFDGFDGFDGFDGFDGFGDFGDFGDFGDFGDFGDFG111111")
             window.history.back();
         }
     });
