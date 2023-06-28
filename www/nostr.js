@@ -52,7 +52,7 @@ function onDeviceReady() {
     document.addEventListener("backbutton", function (e) {
         console.log(window.history)
         console.log(JSON.stringify(window.history.state))
-        if (!window.history || window.history.length < 1) { //you check that there is nothing left in the history.
+        if (!window.history || !window.history.state) { //you check that there is nothing left in the history.
             e.preventDefault();
             console.log("DFDFDFDGFDGFDGFDGFDGFDGFDGFDGFGDFGDFGDFGDFGDFGDFG")
             navigator.app.exitApp();
