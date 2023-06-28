@@ -52,7 +52,7 @@ function onDeviceReady() {
     document.addEventListener("backbutton", function (e) {
         console.log(window.history)
         console.log(window.history)
-        console.log(window.history.length)
+        console.log(window.history.state)
         if (!window.history || window.history.length < 1) { //you check that there is nothing left in the history.
             e.preventDefault();
             console.log("DFDFDFDGFDGFDGFDGFDGFDGFDGFDGFGDFGDFGDFGDFGDFGDFG")
