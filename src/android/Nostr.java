@@ -301,7 +301,7 @@ public class Nostr extends CordovaPlugin {
   private AlertDialog.Builder createDialog(CordovaInterface cordova) {
     int currentApiVersion = android.os.Build.VERSION.SDK_INT;
     if (currentApiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-      return new AlertDialog.Builder(cordova.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
+      return new AlertDialog.Builder(cordova.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_DARK);
     } else {
       return new AlertDialog.Builder(cordova.getActivity());
     }
